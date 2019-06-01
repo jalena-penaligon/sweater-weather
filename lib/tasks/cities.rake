@@ -17,7 +17,7 @@ namespace :cities do
 
       cities.each do |city|
         @conn = Faraday.new('https://maps.googleapis.com/') do |f|
-          f.params[:key] = "AIzaSyBG3Kg1dlvxKoS6sPrFJmpgKLdNrWdapTA"
+          f.params[:key] = ENV["google-key"]
           f.adapter Faraday.default_adapter
         end
 

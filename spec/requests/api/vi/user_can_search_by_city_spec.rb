@@ -30,7 +30,17 @@ describe 'Weather API' do
 
   it 'displays current weather data' do
     location = Location.create(city_state: "Denver, CO", country: "United States", lat: "39.7392358", long: "-104.990251")
-    current_temperature = CurrentTemperature.create(location: location,  temperature: 74.03, feels_like: 74.03, uvindex: 8, summary: "Partly Cloudy", icon: "partly-cloudy-day", humidity: 0.34, visibility: 8.14, high_temp: 77.01, low_temp: 65.04)
+    current_temperature = CurrentTemperature.create(location: location,
+                                                    temperature: 74.03,
+                                                    feels_like: 74.03,
+                                                    uvindex: 8,
+                                                    summary: "Partly Cloudy",
+                                                    full_summary: "Light rain starting in the afternoon, continuing until evening.",
+                                                    icon: "partly-cloudy-day",
+                                                    humidity: 0.34,
+                                                    visibility: 8.14,
+                                                    high_temp: 77.01,
+                                                    low_temp: 65.04)
 
     get '/api/v1/forecast?location=denver,co'
 
@@ -46,5 +56,6 @@ describe 'Weather API' do
     expect(data["visibility"]).to eq(8.14)
     expect(data["high_temp"]).to eq(77.01)
     expect(data["low_temp"]).to eq(65.04)
+    expect(data["full_summary"]).to eq("Light rain starting in the afternoon, continuing until evening.")
   end
 end

@@ -12,6 +12,7 @@ namespace :forecast do
         CurrentTemperature.create(location: city,
                                   temperature: current_weather[:temperature],
                                   summary: current_weather[:summary],
+                                  full_summary: daily_weather.first[:summary],
                                   icon: current_weather[:icon],
                                   feels_like: current_weather[:apparentTemperature],
                                   humidity: current_weather[:humidity],

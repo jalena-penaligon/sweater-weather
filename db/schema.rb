@@ -10,10 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_01_212512) do
+ActiveRecord::Schema.define(version: 2019_06_02_221505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "current_temperatures", force: :cascade do |t|
+    t.float "temperature"
+    t.string "summary"
+    t.string "icon"
+    t.float "feels_like"
+    t.float "humidity"
+    t.float "visibility"
+    t.integer "uvindex"
+    t.bigint "location_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float "high_temp"
+    t.float "low_temp"
+    t.string "full_summary"
+    t.index ["location_id"], name: "index_current_temperatures_on_location_id"
+  end
 
   create_table "locations", force: :cascade do |t|
     t.string "city_state"
@@ -24,4 +41,5 @@ ActiveRecord::Schema.define(version: 2019_06_01_212512) do
     t.string "country"
   end
 
+  add_foreign_key "current_temperatures", "locations"
 end

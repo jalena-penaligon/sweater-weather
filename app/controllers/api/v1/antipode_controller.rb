@@ -1,7 +1,7 @@
 class Api::V1::AntipodeController < ApplicationController
 
   def show
-    antipode = service.get_antipode(params[:loc])
+    antipode = service.get_antipode
     render json: {
       antipode: Antipode.new(antipode)
     }
@@ -10,7 +10,7 @@ class Api::V1::AntipodeController < ApplicationController
   private
 
   def service
-    AmypodeService.new(location)
+    AmypodeService.new(params[:loc])
   end
 
 end

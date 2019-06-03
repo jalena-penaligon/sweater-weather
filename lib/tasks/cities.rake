@@ -16,15 +16,9 @@ namespace :cities do
       "New Orleans, LA", "Arlington, TX"]
 
       cities.each do |city|
-        @conn = Faraday.new('https://maps.googleapis.com/') do |f|
-          f.params[:key] = ENV["google-key"]
-          f.adapter Faraday.default_adapter
-        end
-
-        response = @conn.get("/maps/api/geocode/json?components=locality:#{city}|country:US")
-        @location = JSON.parse(response.body, symbolize_names: true)[:results][0][:geometry][:location]
-
-        Location.create(city_state: city, country: "United States", lat: @location[:lat], long: @location[:lng])
+        service = GoogleService.new(city)
+        location = service.get_coords
+        Location.create(city_state: city, country: "United States", lat: location[:lat], long: location[:lng])
       end
   end
 end

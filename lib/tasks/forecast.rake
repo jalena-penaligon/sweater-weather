@@ -9,6 +9,10 @@ namespace :forecast do
         @weather = JSON.parse(response.body, symbolize_names: true)
         current_weather = @weather[:currently]
         daily_weather =  @weather[:daily][:data]
+        hourly_weather = @weather[:hourly][:data]
+
+        current = CurrentTemperature.find_by(location_id: city.id)
+        current.destroy
         CurrentTemperature.create(location: city,
                                   temperature: current_weather[:temperature],
                                   summary: current_weather[:summary],
@@ -20,6 +24,33 @@ namespace :forecast do
                                   uvindex: current_weather[:uvIndex],
                                   high_temp: daily_weather.first[:temperatureHigh],
                                   low_temp: daily_weather.first[:temperatureLow])
+
+
+        hourly = HourlyTemperature.where(location_id: city.id)
+        hourly.each do |hour|
+          hour.destroy
+        end
+
+        hourly_weather.each do |hour|
+          HourlyTemperature.create(location: city,
+                                   time: hour[:time],
+                                   temperature: hour[:temperature],
+                                   icon: hour[:icon])
+        end
+
+        weekly = WeeklyTemperature.where(location_id: city.id)
+        weekly.each do |week|
+          week.destroy
+        end
+        
+        daily_weather.each do |day|
+          WeeklyTemperature.create(location: city,
+                                   time: day[:time],
+                                   high_temp: day[:temperatureHigh],
+                                   low_temp: day[:temperatureLow],
+                                   icon: day[:icon],
+                                   chance_precip: day[:precipProbability])
+        end
       end
   end
 end

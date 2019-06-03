@@ -1,10 +1,11 @@
 class GoogleService
-  def initialize(city)
+  def initialize(city, country)
     @city = city
+    @country = country
   end
 
   def get_coords
-    get_json("/maps/api/geocode/json?components=locality:#{@city}|country:US")
+    get_json("/maps/api/geocode/json?components=locality:#{@city}|#{@country}")
   end
 
   private

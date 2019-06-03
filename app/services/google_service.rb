@@ -5,7 +5,11 @@ class GoogleService
   end
 
   def get_coords
-    get_json("/maps/api/geocode/json?components=locality:#{@city}|#{@country}")
+    get_json("/maps/api/geocode/json?components=locality:#{@city}|#{@country}")[:geometry][:location]
+  end
+
+  def get_reverse_geocode(lat, long)
+    get_json("/maps/api/geocode/json?latlng=#{lat},#{long}")[:address_components][1][:long_name]
   end
 
   private
@@ -19,6 +23,6 @@ class GoogleService
 
   def get_json(url)
     response = conn.get(url)
-    JSON.parse(response.body, symbolize_names: true)[:results][0][:geometry][:location]
+    JSON.parse(response.body, symbolize_names: true)[:results][0]
   end
 end

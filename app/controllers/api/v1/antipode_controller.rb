@@ -3,7 +3,7 @@ class Api::V1::AntipodeController < ApplicationController
   def show
     antipode = service.get_antipode
     render json: {
-      antipode: Antipode.new(antipode)
+      antipode: AntipodeSerializer.new(antipode)
     }
   end
 

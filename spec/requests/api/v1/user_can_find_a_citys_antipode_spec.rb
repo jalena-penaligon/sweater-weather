@@ -9,7 +9,12 @@ describe 'Antipode API' do
     expect(response).to be_successful
     data = JSON.parse(response.body)
 
-    expect(data["type"]).to eq("antipode")
-    expect(data["search_location"]).to eq("Hong Kong")
+    expect(data["antipode"]["data"]["type"]).to eq("antipode")
+    expect(data["antipode"]["data"]["attributes"]["search_location"]).to eq("Hong Kong")
+    expect(data["antipode"]["data"]["attributes"]["location_name"]).to eq("Jujuy")
+
+    expect(data["forecast"]).to be_a(Hash)
+    expect(data["forecast"]).to have_key("summary")
+    expect(data["forecast"]).to have_key("current_temperature")
   end
 end

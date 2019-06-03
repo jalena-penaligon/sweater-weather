@@ -6,9 +6,11 @@ class AmypodeService
   def get_antipode
     @coords = google_service.get_coords
     city = find_city.city_state
-    antipode_coords = get_json('/api/v1/antipodes')[:data][:attributes]
-    antipode_name = google_service.get_reverse_geocode(antipode_coords[:lat], antipode_coords[:long])
-    Antipode.create(location_name: antipode_name, search_location: city)
+    @antipode_coords = get_json('/api/v1/antipodes')[:data][:attributes]
+    forecast = darksky_service.get_weather[:currently]
+    antipode_forecast = AntipodeForecast.create(current_temperature: forecast[:temperature], summary: forecast[:summary])
+    antipode_name = google_service.get_reverse_geocode(@antipode_coords[:lat], @antipode_coords[:long])
+    Antipode.create(location_name: antipode_name, search_location: city, antipode_forecast: antipode_forecast)
   end
 
   private
@@ -19,6 +21,10 @@ class AmypodeService
       loc.long = @coords[:lng]
       loc.country = @location[1].upcase
     end
+  end
+
+  def darksky_service
+    DarkSkyService.new(@antipode_coords[:lat], @antipode_coords[:long])
   end
 
   def google_service

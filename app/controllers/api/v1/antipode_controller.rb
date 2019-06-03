@@ -1,15 +1,17 @@
 class Api::V1::AntipodeController < ApplicationController
 
   def show
-    antipode = service.get_antipode
+    antipode = amypode_service.get_antipode
+    forecast = antipode.antipode_forecast
     render json: {
-      antipode: AntipodeSerializer.new(antipode)
+      antipode: AntipodeSerializer.new(antipode),
+      forecast: forecast.as_json(except: [:id])
     }
   end
 
   private
 
-  def service
+  def amypode_service
     AmypodeService.new(params[:loc])
   end
 

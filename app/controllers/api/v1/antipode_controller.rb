@@ -5,7 +5,6 @@ class Api::V1::AntipodeController < ApplicationController
     forecast = antipode.antipode_forecast
     render json: {
       antipode: AntipodeSerializer.new(antipode),
-      forecast: forecast.as_json(except: [:id])
     }
   end
 

@@ -15,12 +15,14 @@ gem 'rspec-rails'
 gem 'fast_jsonapi'
 gem 'faraday'
 gem 'figaro'
+gem 'bcrypt', '~> 3.1.7'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry'
   gem 'simplecov'
   gem 'shoulda-matchers'
+  gem 'capybara'
 end
 
 group :development do

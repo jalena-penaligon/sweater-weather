@@ -16,9 +16,12 @@ namespace :cities do
       "New Orleans, LA", "Arlington, TX"]
 
       cities.each do |city|
-        service = GoogleService.new(city)
-        location = service.get_coords
-        Location.create(city_state: city, country: "United States", lat: location[:lat], long: location[:lng])
+        google_service = GoogleService.new(city)
+        location = google_service.get_coords
+
+        image_service = PixabayService.new(city)
+        image = image_service.get_background
+        Location.create(city_state: city, country: "United States", lat: location[:lat], long: location[:lng], background_image: image)
       end
   end
 end

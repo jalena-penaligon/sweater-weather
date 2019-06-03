@@ -1,18 +1,20 @@
 namespace :forecast do
-  desc "Generates forecast for top 50 cities"
+  desc "Generates forecast for all cities"
   task generate: :environment do
 
     cities = Location.all
 
       cities.each do |city|
-        response = Faraday.get("https://api.darksky.net/forecast/#{ENV['darksky-key']}/#{city.lat},#{city.long}")
-        @weather = JSON.parse(response.body, symbolize_names: true)
-        current_weather = @weather[:currently]
-        daily_weather =  @weather[:daily][:data]
-        hourly_weather = @weather[:hourly][:data]
+        service = DarkSkyService.new(city.lat, city.long)
+        weather = service.get_weather
+        current_weather = weather[:currently]
+        daily_weather =  weather[:daily][:data]
+        hourly_weather = weather[:hourly][:data]
 
         current = CurrentTemperature.find_by(location_id: city.id)
-        current.destroy
+        if current != nil
+          current.destroy
+        end
         CurrentTemperature.create(location: city,
                                   temperature: current_weather[:temperature],
                                   summary: current_weather[:summary],
@@ -27,8 +29,10 @@ namespace :forecast do
 
 
         hourly = HourlyTemperature.where(location_id: city.id)
-        hourly.each do |hour|
-          hour.destroy
+        if hourly != []
+          hourly.each do |hour|
+            hour.destroy
+          end
         end
 
         hourly_weather.each do |hour|
@@ -39,10 +43,12 @@ namespace :forecast do
         end
 
         weekly = WeeklyTemperature.where(location_id: city.id)
-        weekly.each do |week|
-          week.destroy
+        if weekly != []
+          weekly.each do |week|
+            week.destroy
+          end
         end
-        
+
         daily_weather.each do |day|
           WeeklyTemperature.create(location: city,
                                    time: day[:time],

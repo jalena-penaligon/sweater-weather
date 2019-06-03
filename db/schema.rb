@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_02_221505) do
+ActiveRecord::Schema.define(version: 2019_06_02_235726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,16 @@ ActiveRecord::Schema.define(version: 2019_06_02_221505) do
     t.index ["location_id"], name: "index_current_temperatures_on_location_id"
   end
 
+  create_table "hourly_temperatures", force: :cascade do |t|
+    t.string "time"
+    t.string "icon"
+    t.float "temperature"
+    t.bigint "location_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_hourly_temperatures_on_location_id"
+  end
+
   create_table "locations", force: :cascade do |t|
     t.string "city_state"
     t.string "lat"
@@ -41,5 +51,17 @@ ActiveRecord::Schema.define(version: 2019_06_02_221505) do
     t.string "country"
   end
 
+  create_table "weekly_temperatures", force: :cascade do |t|
+    t.bigint "location_id"
+    t.string "time"
+    t.float "chance_precip"
+    t.string "icon"
+    t.float "high_temp"
+    t.float "low_temp"
+    t.index ["location_id"], name: "index_weekly_temperatures_on_location_id"
+  end
+
   add_foreign_key "current_temperatures", "locations"
+  add_foreign_key "hourly_temperatures", "locations"
+  add_foreign_key "weekly_temperatures", "locations"
 end

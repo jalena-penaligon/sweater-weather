@@ -10,5 +10,8 @@ describe 'Registration API' do
 
     page.driver.post('/api/v1/users', user_params )
     expect(page.driver.status_code).to eq(201)
+
+    user = User.last
+    expect(user.email).to eq(user_params[:email])
   end
 end

@@ -13,12 +13,12 @@ class Api::V1::FavoritesController < ApplicationController
   end
 
   def create
-    user = User.find_by(access_token: params[:api_key])
-    location = Location.find_by(city_state: params[:location])
+    user = find_user
+    location = find_location
     if user && location
       Favorite.create(user: user, location: location)
       render status: 200,
-      json: { 
+      json: {
         user: user.as_json(only: [:id, :access_token]),
         location: location.as_json(only: [:id, :city_state])
       }
@@ -31,7 +31,29 @@ class Api::V1::FavoritesController < ApplicationController
     end
   end
 
+  def destroy
+    user = find_user
+    location = find_location
+    if user && location
+      favorite = Favorite.find_by(user_id: user.id, location_id: location.id)
+      Favorite.destroy(favorite.id)
+      render status: 200,
+      json: "Favorite successfully deleted."
+    else
+      render status: 401,
+      json: "Unauthorized"
+    end
+  end
+
   private
+
+  def find_user
+    User.find_by(access_token: params[:api_key])
+  end
+
+  def find_location
+    Location.find_by(city_state: params[:location])
+  end
 
   def build_location_data(favorite)
     favorite_weather = CurrentTemperature.find_by(location_id: favorite.id)

@@ -11,5 +11,6 @@ describe 'Login API' do
     page.driver.post('/api/v1/sessions', user_params )
     expect(page.driver.status_code).to eq(200)
     expect(page).to have_content(user.access_token)
+    page.driver.reset!
   end
 end

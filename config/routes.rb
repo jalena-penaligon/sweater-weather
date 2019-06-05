@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       get '/backgrounds', to: 'background#show'
       resources :users, only: [:create]
       resources :sessions, only: [:create]
-      resources :favorites, only: [:create]
+      resources :favorites, only: [:create, :index]
     end
   end
 end

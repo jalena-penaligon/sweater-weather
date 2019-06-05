@@ -43,6 +43,7 @@ describe 'Favoriting API' do
     }
     page.driver.get('/api/v1/favorites', body)
     expect(page.driver.status_code).to eq(200)
+
     expect(page).to have_content(columbus.city_state)
     expect(page).to have_content(current_temperature.temperature)
     expect(page).to have_content(current_temperature.feels_like)
@@ -54,6 +55,34 @@ describe 'Favoriting API' do
     expect(page).to have_content(current_temperature.high_temp)
     expect(page).to have_content(current_temperature.low_temp)
     expect(page).to have_content(current_temperature.full_summary)
+    page.driver.reset!
+  end
+
+  it 'can delete a favorite', type: :feature do
+    user = User.create(email: "whatever@example.com", password: "password", password_confirmation: "password", access_token: "jgn983hy48thw9begh98h4539h4")
+    columbus = Location.create!(city_state: "Columbus, OH", country: "United States", lat: "39.7392358", long: "-104.990251", background_image: "https://live.staticflickr.com/3754/12236002135_ea8b8dc37e_k.jpg")
+    favorite = Favorite.create(user: user, location: columbus)
+
+    body = {
+      "location": "Columbus, OH",
+      "api_key": "jgn983hy48thw9begh98h4539h4"
+    }
+    page.driver.delete('/api/v1/favorites', body)
+    expect(page.driver.status_code).to eq(200)
+    expect(page).to have_content("Favorite successfully deleted.")
+    page.driver.reset!
+  end
+
+  it 'renders an error if no api key is sent', type: :feature do
+    user = User.create(email: "whatever@example.com", password: "password", password_confirmation: "password", access_token: "jgn983hy48thw9begh98h4539h4")
+    columbus = Location.create!(city_state: "Columbus, OH", country: "United States", lat: "39.7392358", long: "-104.990251", background_image: "https://live.staticflickr.com/3754/12236002135_ea8b8dc37e_k.jpg")
+    favorite = Favorite.create(user: user, location: columbus)
+
+    body = {
+      "location": "Denver, CO"
+    }
+    page.driver.delete('/api/v1/favorites', body)
+    expect(page.driver.status_code).to eq(401)
     page.driver.reset!
   end
 end

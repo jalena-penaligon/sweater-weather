@@ -195,4 +195,11 @@ describe 'Weather API' do
     expect(data[5]["attributes"]["time"]).to eq("1559430000")
     expect(data[6]["attributes"]["chance_precip"]).to eq(0.42)
   end
+
+  it 'will create a location if a user searches a non-database city' do
+    get '/api/v1/forecast?location=boulder,co'
+
+    boulder = Location.last
+    expect(boulder.city_state).to eq("Boulder, CO")
+  end
 end

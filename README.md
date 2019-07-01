@@ -28,7 +28,7 @@ The project was built using Ruby on Rails which implements the following:
       rails s
 
   ### Available Endpoints:
-    #### POST /api/v1/users
+   #### POST /api/v1/users
         Headers:
         Content-Type: application/json
         Accept: application/json
@@ -40,7 +40,7 @@ The project was built using Ruby on Rails which implements the following:
           "password_confirmation": "password"
         }
 
-    #### POST /api/v1/sessions
+   #### POST /api/v1/sessions
         Headers:
         Content-Type: application/json
         Accept: application/json
@@ -51,19 +51,19 @@ The project was built using Ruby on Rails which implements the following:
           "password": "password"
         }
 
-    #### GET /api/v1/forecast?location=denver,co
+   #### GET /api/v1/forecast?location=denver,co
         Headers:
         Content-Type: application/json
         Accept: application/json
        
         
-    #### GET /api/v1/backgrounds?location=denver,co
+   #### GET /api/v1/backgrounds?location=denver,co
         Headers:
         Content-Type: application/json
         Accept: application/json
 
 
-    #### POST /api/v1/favorites
+   #### POST /api/v1/favorites
         Headers:
         Content-Type: application/json
         Accept: application/json
@@ -75,7 +75,7 @@ The project was built using Ruby on Rails which implements the following:
         }
         * substitute a valid api_key after posting to /users
 
-    #### GET /api/v1/favorites
+   #### GET /api/v1/favorites
         Headers:
         Content-Type: application/json
         Accept: application/json
@@ -86,7 +86,7 @@ The project was built using Ruby on Rails which implements the following:
         }
         * substitute a valid api_key after posting to /users
 
-    #### DELETE /api/v1/favorites
+   #### DELETE /api/v1/favorites
         Headers:
         Content-Type: application/json
         Accept: application/json

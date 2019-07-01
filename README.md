@@ -76,7 +76,7 @@ The project was built using Ruby on Rails which implements the following:
         * substitute a valid api_key after posting to /users
 
    #### GET /api/v1/favorites
-        **Headers:**
+        __Headers:__
         Content-Type: application/json
         Accept: application/json
 

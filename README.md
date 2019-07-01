@@ -29,11 +29,11 @@ The project was built using Ruby on Rails which implements the following:
 
   ### Available Endpoints:
    #### POST /api/v1/users
-        Headers:
+        **Headers:**
         Content-Type: application/json
         Accept: application/json
 
-        Body:
+        **Body:**
         {
           "email": "my_email@example.com",
           "password": "password"
@@ -41,34 +41,34 @@ The project was built using Ruby on Rails which implements the following:
         }
 
    #### POST /api/v1/sessions
-        Headers:
+        **Headers:**
         Content-Type: application/json
         Accept: application/json
 
-        Body:
+        **Body:**
         {
           "email": "my_email@example.com",
           "password": "password"
         }
 
    #### GET /api/v1/forecast?location=denver,co
-        Headers:
+        **Headers:**
         Content-Type: application/json
         Accept: application/json
        
         
    #### GET /api/v1/backgrounds?location=denver,co
-        Headers:
+        **Headers:**
         Content-Type: application/json
         Accept: application/json
 
 
    #### POST /api/v1/favorites
-        Headers:
+        **Headers:**
         Content-Type: application/json
         Accept: application/json
 
-        Body:
+        **Body:**
         {
           "location": "Denver, CO",
           "api_key": "jgn983hy48thw9begh98h4539h4"
@@ -76,22 +76,22 @@ The project was built using Ruby on Rails which implements the following:
         * substitute a valid api_key after posting to /users
 
    #### GET /api/v1/favorites
-        Headers:
+        **Headers:**
         Content-Type: application/json
         Accept: application/json
 
-        Body:
+        **Body:**
         {
           "api_key": "jgn983hy48thw9begh98h4539h4"
         }
         * substitute a valid api_key after posting to /users
 
    #### DELETE /api/v1/favorites
-        Headers:
+        **Headers:**
         Content-Type: application/json
         Accept: application/json
 
-        Body:
+        **Body:**
         {
           "location": "Denver, CO",
           "api_key": "jgn983hy48thw9begh98h4539h4"

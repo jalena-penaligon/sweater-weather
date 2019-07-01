@@ -41,24 +41,24 @@ The project was built using Ruby on Rails which implements the following:
         }
 
    #### POST /api/v1/sessions
-        **Headers:**
+       Headers:
         Content-Type: application/json
         Accept: application/json
 
-        **Body:**
+       Body:
         {
           "email": "my_email@example.com",
           "password": "password"
         }
 
    #### GET /api/v1/forecast?location=denver,co
-        **Headers:**
+       Headers:
         Content-Type: application/json
         Accept: application/json
        
         
    #### GET /api/v1/backgrounds?location=denver,co
-        **Headers:**
+       Headers:
         Content-Type: application/json
         Accept: application/json
 
